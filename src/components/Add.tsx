@@ -8,6 +8,7 @@ interface IProps {
     readonly AddTodo:()=>void
 }
 
+//定义无状态组件SFC,传递Iprops状态，并设置其内属性为只读
 const Add: SFC<IProps> = ({ ...AddProps }) => {
    
     const {inputValue,handlechange,AddTodo}=AddProps
