@@ -32,7 +32,7 @@ class  Todolist extends Component<IProps, IState> {
         todo:[{
             text:'吃饭',
             compoleted:false,
-            deleted:false            
+            deleted:true            
         },{
             text:'睡觉',
             compoleted:true,
@@ -69,13 +69,34 @@ class  Todolist extends Component<IProps, IState> {
 
     const TodoProps={
         todo,
-        filtertype
+        filtertype,
+        Compoleted:(item:Itood):void=>{
+            const newTodos=[...todo]
+            newTodos.map((ele)=>{
+                if(ele.text==item.text){
+                    ele.compoleted=!item.compoleted
+                }
+            })
+            console.log(newTodos)
+             
+              this.setState({
+                  todo:newTodos
+              })
+        }
+    }
+    const FilterProps={
+        ChangeType:(item:FilterType):void=>{
+            console.log(item)
+            this.setState({
+                filtertype:item
+            })
+        }
     }
    return (
        <div>
           <Add {...AddProps} />
           <Todo {...TodoProps} />
-          <Filter />
+          <Filter {...FilterProps} />
        </div>
      );
    }

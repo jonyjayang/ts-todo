@@ -10,7 +10,8 @@ enum FilterType{
 
 interface IProps {
     todo:Array<Itodo>,
-    filtertype:FilterType
+    filtertype:FilterType,
+    Compoleted:(item:Itodo)=>void
 }
 
 interface Itodo{
@@ -20,7 +21,7 @@ interface Itodo{
 }
 const Todo: SFC<IProps> = ({...TodoProps}) => {
     // console.log(TodoProps)
-    const {todo,filtertype}=TodoProps
+    const {todo,filtertype,Compoleted}=TodoProps
     //根据枚举类型对数据进行筛选
     const data=todo.filter((item:Itodo)=>{
         if(filtertype===FilterType.All){
@@ -31,7 +32,7 @@ const Todo: SFC<IProps> = ({...TodoProps}) => {
             return !item.compoleted
         }
     })
-    console.log(data)
+  
     return (
         <div>
             <List
@@ -39,7 +40,7 @@ const Todo: SFC<IProps> = ({...TodoProps}) => {
                 bordered
                 dataSource={data}
                 renderItem={(item:Itodo,index:number) => (
-                    <List.Item actions={[<a>compelted</a>, <a>more</a>]} key={index}>
+                    <List.Item style={{textDecoration:item.deleted?'line-through':'none'}} actions={[<a onClick={()=>Compoleted(item)} >更改状态</a>, <a>删除</a>]} key={index}>
                         {item.text}
                     </List.Item>
                 )}
